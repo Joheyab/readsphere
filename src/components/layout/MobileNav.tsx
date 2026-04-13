@@ -1,34 +1,146 @@
-"use client";
+"use client"
 
-import Link from "next/link";
-import LogoutButton from "@/components/auth/LogoutButton";
+import { supabase } from "@/lib/supabase/client"
+import Link from "next/link"
+import { useEffect, useState } from "react"
+import LogoutButton from "../auth/LogoutButton"
 
 export default function MobileNav() {
+  const [open, setOpen] = useState(false)
+  const [avatarUrl, setAvatarUrl] = useState<string | null>(null)
+  const [username, setUsername] = useState<string | null>(null)
+
+  useEffect(() => {
+    const fetchProfile = async () => {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser()
+      if (!user) return
+
+      const { data } = await supabase
+        .from("profiles")
+        .select("avatar_url, username")
+        .eq("id", user.id)
+        .single()
+
+      if (data) {
+        setAvatarUrl(data.avatar_url)
+        setUsername(data.username)
+      }
+    }
+
+    fetchProfile()
+  }, [])
+
   return (
-    <div className="space-y-4">
-      <div>
+    <>
+      {/* Top bar */}
+      <div className="flex items-center justify-between">
+        {/* Avatar trigger */}
+        <div
+          onClick={() => setOpen(true)}
+          className="relative w-9 h-9 rounded-full overflow-hidden bg-zinc-800 border border-zinc-700 flex items-center justify-center shrink-0"
+        >
+          {avatarUrl ? (
+            <img
+              src={avatarUrl}
+              alt="Avatar"
+              className="w-full h-full object-fill"
+            />
+          ) : (
+            <span className="text-zinc-400 text-sm font-medium">
+              {username?.[0]?.toUpperCase() ?? "?"}
+            </span>
+          )}
+        </div>
+
         <h1 className="text-lg font-bold">📚 ReadSphere</h1>
+
+        {/* Spacer para centrar el título */}
+        <div className="w-9" />
       </div>
 
-      <nav className="flex items-center gap-2 overflow-x-auto">
-        <Link href="/" className="rounded-lg bg-zinc-800 px-3 py-2 text-sm">
-          Home
-        </Link>
-        <Link
-          href="/library"
-          className="rounded-lg bg-zinc-800 px-3 py-2 text-sm"
-        >
-          Biblioteca
-        </Link>
-        <Link
-          href="/dashboard"
-          className="rounded-lg bg-zinc-800 px-3 py-2 text-sm"
-        >
-          Dashboard
-        </Link>
-      </nav>
+      {/* Backdrop */}
+      {open && (
+        <div
+          className="fixed inset-0 z-40 bg-black/60 backdrop-blur-sm"
+          onClick={() => setOpen(false)}
+        />
+      )}
 
-      <LogoutButton />
-    </div>
-  );
+      {/* Drawer */}
+      <div
+        className={`fixed top-0 left-0 z-50 h-full w-72 bg-zinc-900 border-r border-zinc-800 flex flex-col p-6 transition-transform duration-300 ease-in-out ${
+          open ? "translate-x-0" : "-translate-x-full"
+        }`}
+      >
+        {/* Profile header */}
+        <div className="flex items-center gap-3 mb-10">
+          <div className="w-9 h-9 rounded-full overflow-hidden bg-zinc-800 border border-zinc-700 shrink-0">
+            {avatarUrl ? (
+              <img
+                src={avatarUrl}
+                alt="Avatar"
+                className="w-full h-full object-fill"
+              />
+            ) : (
+              <div className="w-full h-full flex items-center justify-center">
+                <span className="text-zinc-400 text-sm font-medium">
+                  {username?.[0]?.toUpperCase() ?? "?"}
+                </span>
+              </div>
+            )}
+          </div>
+          <div className="min-w-0">
+            <p className="text-white font-medium text-sm truncate">
+              @{username ?? "..."}
+            </p>
+            <p className="text-zinc-500 text-xs">Ver perfil</p>
+          </div>
+          {/* Close button */}
+          <button
+            onClick={() => setOpen(false)}
+            className="ml-auto text-zinc-500 hover:text-white transition"
+          >
+            <svg
+              className="w-5 h-5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M6 18L18 6M6 6l12 12"
+              />
+            </svg>
+          </button>
+        </div>
+
+        {/* Nav links */}
+        <nav className="space-y-1 flex-1">
+          {[
+            { href: "/", label: "🏠 Home" },
+            { href: "/library", label: "📚 Mi biblioteca" },
+            { href: "/dashboard", label: "📊 Dashboard" },
+          ].map(({ href, label }) => (
+            <Link
+              key={href}
+              href={href}
+              onClick={() => setOpen(false)}
+              className="block rounded-xl px-4 py-3 text-sm text-zinc-300 hover:bg-zinc-800 hover:text-white transition"
+            >
+              {label}
+            </Link>
+          ))}
+        </nav>
+
+        {/* Logout */}
+        <div className="pt-6 border-t border-zinc-800">
+          <LogoutButton />
+        </div>
+      </div>
+    </>
+  )
 }
