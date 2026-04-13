@@ -1,4 +1,7 @@
 
+
+export type LibraryStatus = "want_to_read" | "reading" | "finished";
+
 export type UserLibraryEntry = {
   id: string;
   status: "want_to_read" | "reading" | "finished";
