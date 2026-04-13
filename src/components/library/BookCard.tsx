@@ -1,9 +1,9 @@
-import Image from "next/image";
-import { UserLibraryEntry } from "@/types/library";
+import { UserLibraryEntry } from "@/types/library"
+import Image from "next/image"
 
 type Props = {
-  entry: UserLibraryEntry;
-};
+  entry: UserLibraryEntry
+}
 
 export default function BookCard({ entry }: Props) {
   return (
@@ -25,15 +25,14 @@ export default function BookCard({ entry }: Props) {
           </div>
         )}
 
-        {entry.status === "reading" &&
-          entry.progress_percent !== null && (
-            <div className="absolute bottom-0 left-0 right-0 h-1 bg-zinc-800">
-              <div
-                className="h-full bg-violet-500"
-                style={{ width: `${entry.progress_percent}%` }}
-              />
-            </div>
-          )}
+        {entry.status === "reading" && entry.progress_percent !== null && (
+          <div className="absolute bottom-0 left-0 right-0 h-1 bg-zinc-800">
+            <div
+              className="h-full bg-violet-500"
+              style={{ width: `${entry.progress_percent}%` }}
+            />
+          </div>
+        )}
 
         {entry.status === "finished" && entry.rating && (
           <div className="absolute top-2 right-2 px-2 py-0.5 bg-black/70 rounded-md text-xs text-amber-400">
@@ -47,11 +46,24 @@ export default function BookCard({ entry }: Props) {
           {entry.books.title}
         </p>
         {entry.books.authors && (
-          <p className="text-zinc-500 text-xs">
-            {entry.books.authors.name}
-          </p>
+          <p className="text-zinc-500 text-xs">{entry.books.authors.name}</p>
+        )}
+        {entry.books.book_genres?.length > 0 && (
+          <div className="flex flex-wrap gap-1 mt-1">
+            {entry.books.book_genres.slice(0, 2).map(
+              (bg, i) =>
+                bg.genres && (
+                  <span
+                    key={i}
+                    className="text-xs px-2 py-0.5 rounded-md bg-zinc-800 text-zinc-400 border-purple-500 border"
+                  >
+                    {bg.genres.name}
+                  </span>
+                ),
+            )}
+          </div>
         )}
       </div>
     </div>
-  );
+  )
 }

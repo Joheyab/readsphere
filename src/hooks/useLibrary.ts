@@ -21,17 +21,20 @@ export function useLibrary() {
         .from("user_library")
         .select(
           `
-          id,
-          status,
-          rating,
-          progress_percent,
-          books (
-            id,
-            title,
-            cover_url,
-            authors ( name )
-          )
-        `,
+    id,
+    status,
+    rating,
+    progress_percent,
+    books (
+      id,
+      title,
+      cover_url,
+      authors ( name ),
+      book_genres (
+        genres ( name )
+      )
+    )
+  `,
         )
         .eq("user_id", user.id)
         .order("created_at", { ascending: false })

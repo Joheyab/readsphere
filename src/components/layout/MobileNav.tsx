@@ -1,36 +1,13 @@
 "use client"
 
-import { supabase } from "@/lib/supabase/client"
+import { useProfile } from "@/hooks/useProfile"
 import Link from "next/link"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import LogoutButton from "../auth/LogoutButton"
 
 export default function MobileNav() {
   const [open, setOpen] = useState(false)
-  const [avatarUrl, setAvatarUrl] = useState<string | null>(null)
-  const [username, setUsername] = useState<string | null>(null)
-
-  useEffect(() => {
-    const fetchProfile = async () => {
-      const {
-        data: { user },
-      } = await supabase.auth.getUser()
-      if (!user) return
-
-      const { data } = await supabase
-        .from("profiles")
-        .select("avatar_url, username")
-        .eq("id", user.id)
-        .single()
-
-      if (data) {
-        setAvatarUrl(data.avatar_url)
-        setUsername(data.username)
-      }
-    }
-
-    fetchProfile()
-  }, [])
+  const { profile } = useProfile()
 
   return (
     <>
@@ -41,15 +18,15 @@ export default function MobileNav() {
           onClick={() => setOpen(true)}
           className="relative w-9 h-9 rounded-full overflow-hidden bg-zinc-800 border border-zinc-700 flex items-center justify-center shrink-0"
         >
-          {avatarUrl ? (
+          {profile?.avatar_url ? (
             <img
-              src={avatarUrl}
+              src={profile.avatar_url}
               alt="Avatar"
               className="w-full h-full object-fill"
             />
           ) : (
             <span className="text-zinc-400 text-sm font-medium">
-              {username?.[0]?.toUpperCase() ?? "?"}
+              {profile?.username?.[0]?.toUpperCase() ?? "?"}
             </span>
           )}
         </div>
@@ -77,23 +54,23 @@ export default function MobileNav() {
         {/* Profile header */}
         <div className="flex items-center gap-3 mb-10">
           <div className="w-9 h-9 rounded-full overflow-hidden bg-zinc-800 border border-zinc-700 shrink-0">
-            {avatarUrl ? (
+            {profile?.avatar_url ? (
               <img
-                src={avatarUrl}
+                src={profile.avatar_url}
                 alt="Avatar"
                 className="w-full h-full object-fill"
               />
             ) : (
               <div className="w-full h-full flex items-center justify-center">
                 <span className="text-zinc-400 text-sm font-medium">
-                  {username?.[0]?.toUpperCase() ?? "?"}
+                  {profile?.username?.[0]?.toUpperCase() ?? "?"}
                 </span>
               </div>
             )}
           </div>
           <div className="min-w-0">
             <p className="text-white font-medium text-sm truncate">
-              @{username ?? "..."}
+              @{profile?.username ?? "..."}
             </p>
             <p className="text-zinc-500 text-xs">Ver perfil</p>
           </div>
