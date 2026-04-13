@@ -14,6 +14,9 @@ export default function BookCard({ entry }: Props) {
             src={entry.books.cover_url}
             alt={entry.books.title}
             fill
+            sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, (max-width: 1024px) 25vw, 20vw"
+            loading="eager"
+            priority
             className="object-cover transition group-hover:scale-105"
           />
         ) : (

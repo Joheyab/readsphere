@@ -223,7 +223,7 @@ export default function AddBookModal({ onClose, onAdded }: Props) {
                       onClick={() => { setSelectedBookId(book.id); setStep("status"); }}
                       className="w-full flex items-center gap-3 p-3 bg-zinc-800/50 hover:bg-zinc-800 border border-zinc-700 rounded-xl transition text-left"
                     >
-                      <div className="w-10 h-14 rounded-lg overflow-hidden bg-zinc-700 flex-shrink-0">
+                      <div className="w-10 h-14 rounded-lg overflow-hidden bg-zinc-700 shrink-0">
                         {book.cover_url ? (
                           <img src={book.cover_url} alt={book.title} className="w-full h-full object-cover" />
                         ) : (
@@ -240,11 +240,23 @@ export default function AddBookModal({ onClose, onAdded }: Props) {
                           <p className="text-zinc-500 text-xs mt-0.5">{book.authors.name}</p>
                         )}
                       </div>
-                      <svg className="w-4 h-4 text-zinc-600 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <svg className="w-4 h-4 text-zinc-600 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                       </svg>
                     </button>
                   ))}
+                  {query.trim() && !searching && results.length != 0 && (
+                <div className="text-center py-8">
+                  <p className="text-zinc-400 text-sm">¿No es el que andabas buscando?</p>
+                  <p className="text-zinc-600 text-xs mt-1 mb-4">Puedes agregarlo manualmente</p>
+                  <button
+                    onClick={() => { setNewTitle(query); setStep("create"); }}
+                    className="px-4 py-2 bg-violet-600 hover:bg-violet-500 text-white text-sm font-medium rounded-xl transition"
+                  >
+                    + Agregar {query}
+                  </button>
+                </div>
+              )}
                 </div>
               )}
 

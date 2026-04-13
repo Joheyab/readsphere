@@ -48,15 +48,16 @@ export async function middleware(request: NextRequest) {
       .single()
 
     const isOnboarding = pathname.startsWith("/onboarding")
+    const isAuthRoute = pathname.startsWith("/auth")
+
+    // si ya tiene username y entra a onboarding o auth
+    if (profile?.username && (isOnboarding || isAuthRoute)) {
+      return NextResponse.redirect(new URL("/library", request.url))
+    }
 
     // si no tiene username y no está en onboarding
     if (!profile?.username && !isOnboarding) {
       return NextResponse.redirect(new URL("/onboarding", request.url))
-    }
-
-    // si ya tiene username y entra a onboarding
-    if (profile?.username && isOnboarding) {
-      return NextResponse.redirect(new URL("/library", request.url))
     }
   }
 
@@ -69,5 +70,6 @@ export const config = {
     "/dashboard/:path*",
     "/profile/:path*",
     "/onboarding/:path*",
+    "/auth/:path*",
   ],
 }
