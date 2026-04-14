@@ -1,7 +1,8 @@
 "use client"
 
-import { supabase } from "@/lib/supabase/client";
-import { useEffect, useState } from "react";
+import { supabase } from "@/lib/supabase/client"
+import { useEffect, useState } from "react"
+import { toast } from "sonner"
 
 type Genre = { id: string; name: string }
 type BookResult = {
@@ -197,6 +198,15 @@ export default function AddBookModal({ onClose, onAdded }: Props) {
       { onConflict: "user_id,book_id" },
     )
 
+    const res = await fetch("/api/achievements/check", { method: "POST" })
+    const { unlocked } = await res.json()
+
+    unlocked.forEach((achievement: { title: string; description: string }) => {
+      toast.success(`🏆 ${achievement.title}`, {
+        description: achievement.description,
+        duration: 5000,
+      })
+    })
     if (libError) {
       setError(libError.message)
       setSaving(false)

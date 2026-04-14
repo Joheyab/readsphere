@@ -98,9 +98,9 @@ export default function MobileNav() {
         {/* Nav links */}
         <nav className="space-y-1 flex-1">
           {[
-            { href: "/", label: "🏠 Home" },
+            { href: "/", label: "🏠 Inicio" },
             { href: "/library", label: "📚 Mi biblioteca" },
-            { href: "/dashboard", label: "📊 Dashboard" },
+            { href: `/profile/${profile?.id}`, label: "📊 Perfil" },
           ].map(({ href, label }) => (
             <Link
               key={href}

@@ -3,13 +3,15 @@
 import { UserLibraryEntry } from "@/types/library"
 import { useEffect, useState } from "react"
 import EditBookModal from "./EditBookModal"
+import { on } from "process"
 
 type Props = {
   entry: UserLibraryEntry
   onDeleted: () => void
+  onUpdated: () => void
 }
 
-export default function BookCard({ entry, onDeleted }: Props) {
+export default function BookCard({ entry, onDeleted, onUpdated }: Props) {
   const [open, setOpen] = useState(false)
   const [hovered, setHovered] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
@@ -159,7 +161,15 @@ export default function BookCard({ entry, onDeleted }: Props) {
         </div>
       </div>
 
-      <EditBookModal entry={entry} open={open} onClose={() => setOpen(false)} />
+      <EditBookModal
+        entry={entry}
+        open={open}
+        onClose={() => setOpen(false)}
+        onUpdated={() => {
+          setOpen(false)
+          onUpdated() // 👈
+        }}
+      />
     </>
   )
 }

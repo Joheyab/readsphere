@@ -8,6 +8,7 @@ type Profile = {
   username: string | null;
   bio: string | null;
   favorite_genres: string[] | null;
+  id: string;
 };
 
 type ProfileContextType = {
@@ -25,7 +26,7 @@ export function ProfileProvider({ children }: { children: React.ReactNode }) {
     async function fetchProfile(userId: string) {
       const { data, error } = await supabase
         .from("profiles")
-        .select("avatar_url, username, bio, favorite_genres")
+        .select("avatar_url, username, bio, favorite_genres,id")
         .eq("id", userId)
         .single();
 

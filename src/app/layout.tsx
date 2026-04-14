@@ -1,15 +1,20 @@
 import DesktopNav from "@/components/layout/DesktopNav"
 import MobileNav from "@/components/layout/MobileNav"
 import { ProfileProvider } from "@/context/ProfileContext"
-import type { Metadata } from "next"
+import type { Metadata, Viewport } from "next"
 import "./globals.css"
+import { Toaster } from "sonner"
 
 export const metadata: Metadata = {
   title: "ReadSphere",
   description: "Tu biblioteca personal + red social de lectores",
-  viewport: "width=device-width, initial-scale=1, maximum-scale=1",
 }
 
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
+};
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -19,6 +24,7 @@ export default function RootLayout({
     <html lang="es">
       <body className="h-screen overflow-hidden bg-zinc-950 text-white">
         <ProfileProvider>
+          <Toaster theme="dark" position="top-right" />
           <div className="flex h-screen">
             {/* Desktop Sidebar */}
             <DesktopNav />

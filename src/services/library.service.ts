@@ -10,7 +10,14 @@ export async function getUserLibrary(userId: string) {
       id,
       status,
       rating,
+      format,
       progress_percent,
+      current_page,
+      start_date,
+      finish_date,
+      is_private,
+      purchase_price,
+      purchase_place,
       books (
         id,
         title,
@@ -46,7 +53,6 @@ export async function updateLibraryEntry(entryId: string, userId: string, payloa
     .update(payload)
     .eq("id", entryId)
     .eq("user_id", userId);
-     console.log("updateLibraryEntry error:", error);
 
   if (error) throw new Error(error.message);
 }

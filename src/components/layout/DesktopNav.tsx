@@ -34,7 +34,7 @@ const DesktopNav = () => {
             href="/"
             className="block rounded-xl px-4 py-3 transition hover:bg-zinc-800"
           >
-            Home
+            Inicio
           </Link>
           <Link
             href="/library"
@@ -43,10 +43,10 @@ const DesktopNav = () => {
             Mi biblioteca
           </Link>
           <Link
-            href="/dashboard"
+            href={`/profile/${profile?.id}`}
             className="block rounded-xl px-4 py-3 transition hover:bg-zinc-800"
           >
-            Dashboard
+            Perfil
           </Link>
         </nav>
       </div>
