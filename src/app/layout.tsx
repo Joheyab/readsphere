@@ -7,6 +7,7 @@ import "./globals.css"
 export const metadata: Metadata = {
   title: "ReadSphere",
   description: "Tu biblioteca personal + red social de lectores",
+  viewport: "width=device-width, initial-scale=1, maximum-scale=1",
 }
 
 export default function RootLayout({

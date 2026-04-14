@@ -50,3 +50,15 @@ export async function updateLibraryEntry(entryId: string, userId: string, payloa
 
   if (error) throw new Error(error.message);
 }
+
+export async function deleteLibraryEntry(entryId: string, userId: string) {
+  const supabase = await createClient();
+
+  const { error } = await supabase
+    .from("user_library")
+    .delete()
+    .eq("id", entryId)
+    .eq("user_id", userId);
+
+  if (error) throw new Error(error.message);
+}

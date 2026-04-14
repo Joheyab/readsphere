@@ -35,7 +35,7 @@ export default function LibraryPage() {
             Mi biblioteca
           </h1>
           <p className="text-zinc-500 text-sm mt-1">
-            
+
             {entries.length} libros en tu colección
           </p>
         </div>
@@ -66,7 +66,7 @@ export default function LibraryPage() {
 
                 <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
                   {group.map((entry) => (
-                    <BookCard key={entry.id} entry={entry} />
+                    <BookCard key={entry.id} entry={entry} onDeleted={refetch} />
                   ))}
                 </div>
               </section>
