@@ -1,6 +1,5 @@
 "use client"
 
-import { supabase } from "@/lib/supabase/client"
 import { UserLibraryEntry } from "@/types/library"
 import { useCallback, useEffect, useState } from "react"
 
@@ -13,34 +12,10 @@ export function useLibrary() {
     const fetchLibrary = async () => {
       setLoading(true)
 
-      const {
-        data: { user },
-      } = await supabase.auth.getUser()
-      if (!user) return
-      const { data, error } = await supabase
-        .from("user_library")
-        .select(
-          `
-    id,
-    status,
-    rating,
-    progress_percent,
-    books (
-      id,
-      title,
-      cover_url,
-      authors ( name ),
-      book_genres (
-        genres ( name )
-      )
-    )
-  `,
-        )
-        .eq("user_id", user.id)
-        .order("created_at", { ascending: false })
-
-      if (!error && data) {
-        setEntries(data as unknown as UserLibraryEntry[])
+      const res = await fetch("/api/library")
+      if (res.ok) {
+        const data = await res.json()
+        setEntries(data)
       }
 
       setLoading(false)

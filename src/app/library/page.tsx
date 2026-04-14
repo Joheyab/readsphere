@@ -35,6 +35,7 @@ export default function LibraryPage() {
             Mi biblioteca
           </h1>
           <p className="text-zinc-500 text-sm mt-1">
+            
             {entries.length} libros en tu colección
           </p>
         </div>

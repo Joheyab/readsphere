@@ -1,6 +1,6 @@
 "use client"
 
-import { useProfile } from "@/hooks/useProfile"
+import { useProfile } from "@/context/ProfileContext";
 import Link from "next/link"
 import { useState } from "react"
 import LogoutButton from "../auth/LogoutButton"

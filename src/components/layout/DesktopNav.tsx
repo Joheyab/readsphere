@@ -1,12 +1,11 @@
 "use client"
 
-import { useProfile } from "@/hooks/useProfile"
 import Link from "next/link"
 import LogoutButton from "../auth/LogoutButton"
+import { useProfile } from "@/context/ProfileContext";
 const DesktopNav = () => {
   const { profile } = useProfile()
 
-  console.log("Profile en DesktopNav:", profile) // Debug: Verificar que el perfil se carga correctamente
   return (
     <aside className="hidden lg:flex h-screen w-72 shrink-0 border-r border-zinc-800 bg-zinc-900 p-6 flex-col">
       <div>
