@@ -79,7 +79,7 @@ export async function getFeed(userId: string) {
   if (favoriteGenres.length > 0) {
     const { data: similarUsers } = await supabase
       .from("profiles")
-      .select("id, username, avatar_url, favorite_genres")
+      .select("id, full_name, username, avatar_url, favorite_genres")
       .not("id", "in", `(${excludeIds.join(",")})`)
       .overlaps("favorite_genres", favoriteGenres)
       .limit(3);
@@ -92,7 +92,7 @@ export async function getFeed(userId: string) {
     .from("user_library")
     .select(`
       id, status, created_at,
-      profiles!user_library_user_id_fkey ( id, username, avatar_url ),
+      profiles!user_library_user_id_fkey ( id, full_name, username, avatar_url ),
       books ( id, title, cover_url, authors ( name ) )
     `)
     .in("user_id", followingIds.length > 0 ? followingIds : ["none"])
