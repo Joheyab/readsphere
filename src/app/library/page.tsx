@@ -42,7 +42,7 @@ export default function LibraryPage() {
 
         <button
           onClick={() => setShowModal(true)}
-          className="px-4 py-2.5 bg-violet-600 hover:bg-violet-500 text-white rounded-xl"
+          className="px-4 py-2.5 bg-violet-600 hover:bg-violet-500 text-white rounded-xl cursor-pointer"
         >
           Agregar libro
         </button>

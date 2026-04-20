@@ -100,7 +100,7 @@ export default function MobileNav() {
           {[
             { href: "/", label: "🏠 Inicio" },
             { href: "/library", label: "📚 Mi biblioteca" },
-            { href: `/profile/${profile?.id}`, label: "📊 Perfil" },
+            { href: `/profile/${profile?.username}`, label: "📊 Perfil" },
           ].map(({ href, label }) => (
             <Link
               key={href}

@@ -43,7 +43,7 @@ const DesktopNav = () => {
             Mi biblioteca
           </Link>
           <Link
-            href={`/profile/${profile?.id}`}
+            href={`/profile/${profile?.username}`}
             className="block rounded-xl px-4 py-3 transition hover:bg-zinc-800"
           >
             Perfil
