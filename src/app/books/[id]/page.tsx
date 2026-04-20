@@ -94,10 +94,10 @@ export default function BookPage() {
       </button>
 
       {/* Header */}
-      <div className="flex gap-6">
+      <div className="flex flex-col sm:flex-row gap-4 sm:gap-6">
         
         {/* Cover */}
-        <div className="w-32 h-48 shrink-0 rounded-xl overflow-hidden bg-zinc-900 border border-zinc-800">
+       <div className="w-24 h-36 sm:w-32 sm:h-48 shrink-0 mx-auto sm:mx-0 rounded-xl overflow-hidden bg-zinc-900 border border-zinc-800">
           {book.cover_url ? (
             <img
               src={book.cover_url}
