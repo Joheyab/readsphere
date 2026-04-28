@@ -7,6 +7,7 @@ import { getLocale, getMessages } from "next-intl/server"
 import { ThemeProvider } from "next-themes"
 import { Toaster } from "sonner"
 import "./globals.css"
+import Banner from "@/components/layout/Banner"
 
 export const metadata: Metadata = {
   title: "ReadSphere",
@@ -42,6 +43,7 @@ export default async function RootLayout({
                 <DesktopNav />
 
                 <div className="flex-1 flex flex-col">
+                <Banner />
                   {/* Mobile top nav */}
                   <div className="border-b border-app bg-card px-4 py-4 lg:hidden">
                     <MobileNav />
