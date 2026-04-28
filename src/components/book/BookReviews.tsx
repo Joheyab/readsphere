@@ -1,5 +1,6 @@
 "use client"
 
+import { useTranslations } from "next-intl"
 import { useEffect, useState } from "react"
 
 type Review = {
@@ -23,6 +24,8 @@ export default function BookReviews({ bookId }: Props) {
   const [refresh, setRefresh] = useState(0)
   const [libraryEntryId, setLibraryEntryId] = useState<string | null>(null)
   const [userReview, setUserReview] = useState<Review | null>(null)
+
+  const t = useTranslations()
 
   useEffect(() => {
     const fetchUserReview = async () => {
@@ -88,28 +91,30 @@ export default function BookReviews({ bookId }: Props) {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h2 className="text-lg font-semibold text-white">
-          Reseñas{" "}
+        <h2 className="text-lg font-semibold text-app">
+          {t("book.reviews")}{" "}
           {reviews.length > 0 && (
-            <span className="text-zinc-500 font-normal">
-              ({reviews.length})
-            </span>
+            <span className="text-muted font-normal">({reviews.length})</span>
           )}
         </h2>
         <button
           onClick={() => setShowForm(!showForm)}
-          className="px-3 py-1.5 bg-violet-600 hover:bg-violet-500 text-white text-sm rounded-xl transition cursor-pointer"
+          className="px-3 py-1.5 bg-violet-600 hover:bg-violet-500 text-button text-sm rounded-xl transition cursor-pointer"
         >
-           {showForm ? "Cancelar" : userReview ? "Editar reseña" : "Escribir reseña"}
+          {showForm
+            ? t("common.cancel")
+            : userReview
+              ? t("book.editReview")
+              : t("book.writeReview")}
         </button>
       </div>
 
       {/* Form */}
       {showForm && (
-        <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-5 space-y-4">
+        <div className="bg-card border border-app rounded-2xl p-5 space-y-4">
           <div>
-            <label className="block text-xs text-zinc-400 mb-2">
-              Calificación
+            <label className="block text-xs text-secondary mb-2">
+              {t("book.rating")}
             </label>
             <div className="flex gap-1">
               {[1, 2, 3, 4, 5].map((star) => (
@@ -136,22 +141,24 @@ export default function BookReviews({ bookId }: Props) {
           </div>
 
           <div>
-            <label className="block text-xs text-zinc-400 mb-2">Reseña</label>
+            <label className="block text-xs text-secondary mb-2">
+              {t("book.reviews")}
+            </label>
             <textarea
               value={content}
               onChange={(e) => setContent(e.target.value)}
-              placeholder="Escribe tu opinión sobre este libro..."
+              placeholder={t("book.placeHolderWriteReview")}
               rows={4}
-              className="w-full px-4 py-3 bg-zinc-800 border border-zinc-700 rounded-xl text-white placeholder-zinc-500 text-sm focus:outline-none focus:border-violet-500 transition resize-none"
+              className="w-full px-4 py-3 bg-input border border-zinc-700 rounded-xl text-app placeholder-zinc-500 text-sm focus:outline-none focus:border-violet-500 transition resize-none"
             />
           </div>
 
           <button
             onClick={handleSubmit}
             disabled={!rating || saving}
-            className="w-full py-2.5 bg-violet-600 hover:bg-violet-500 disabled:opacity-50 disabled:cursor-not-allowed text-white font-medium rounded-xl text-sm transition cursor-pointer"
+            className="w-full py-2.5 bg-violet-600 hover:bg-violet-500 disabled:opacity-50 disabled:cursor-not-allowed text-button font-medium rounded-xl text-sm transition cursor-pointer"
           >
-            {saving ? "Guardando..." : "Publicar reseña"}
+            {saving ? t("book.addingToLibrary") : t("book.publishReview")}
           </button>
         </div>
       )}
@@ -162,19 +169,19 @@ export default function BookReviews({ bookId }: Props) {
           <div className="w-5 h-5 border-2 border-violet-500 border-t-transparent rounded-full animate-spin" />
         </div>
       ) : reviews.length === 0 ? (
-        <p className="text-zinc-500 text-sm text-center py-8">
-          Aún no hay reseñas. ¡Sé el primero en escribir una!
+        <p className="text-muted text-sm text-center py-8">
+          {t("book.noReviews")}
         </p>
       ) : (
         <div className="space-y-4">
           {reviews.map((review) => (
             <div
               key={review.id}
-              className="bg-zinc-900 border border-zinc-800 rounded-2xl p-5 space-y-3"
+              className="bg-card border border-app rounded-2xl p-5 space-y-3"
             >
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
-                  <div className="w-8 h-8 rounded-full overflow-hidden bg-zinc-800 flex-shrink-0">
+                  <div className="w-8 h-8 rounded-full overflow-hidden bg-input flex-shrink-0">
                     {review.profiles?.avatar_url ? (
                       <img
                         src={review.profiles.avatar_url}
@@ -182,12 +189,12 @@ export default function BookReviews({ bookId }: Props) {
                         className="w-full h-full object-cover"
                       />
                     ) : (
-                      <div className="w-full h-full flex items-center justify-center text-zinc-400 text-xs font-medium">
+                      <div className="w-full h-full flex items-center justify-center text-secondary text-xs font-medium">
                         {review.profiles?.username?.[0]?.toUpperCase() ?? "?"}
                       </div>
                     )}
                   </div>
-                  <span className="text-white text-sm font-medium">
+                  <span className="text-app text-sm font-medium">
                     @{review.profiles?.username}
                   </span>
                 </div>

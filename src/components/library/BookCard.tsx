@@ -39,13 +39,13 @@ export default function BookCard({ entry, onDeleted, onUpdated }: Props) {
         onMouseLeave={() => setHovered(false)}
         className="group flex flex-col gap-2 cursor-pointer"
       >
-        <div className="relative aspect-[2/3] rounded-xl overflow-hidden bg-zinc-900 border border-zinc-800">
+        <div className="relative aspect-[2/3] rounded-xl overflow-hidden bg-card border border-app">
           <button
             onClick={(e) => {
               e.stopPropagation()
               setMenuOpen(!menuOpen)
             }}
-            className="lg:hidden absolute top-2 left-2 z-10 p-1.5 bg-black/70 rounded-lg text-zinc-400"
+            className="lg:hidden absolute top-2 left-2 z-10 p-1.5 bg-black/70 rounded-lg text-secondary"
           >
             <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
               <path d="M12 5a1.5 1.5 0 100-3 1.5 1.5 0 000 3zm0 7a1.5 1.5 0 100-3 1.5 1.5 0 000 3zm0 7a1.5 1.5 0 100-3 1.5 1.5 0 000 3z" />
@@ -56,7 +56,7 @@ export default function BookCard({ entry, onDeleted, onUpdated }: Props) {
               e.stopPropagation()
               setOpen(true)
             }}
-            className={`hidden lg:block absolute top-2 right-2 z-10 p-1.5 bg-black/70 rounded-lg text-zinc-400 hover:text-violet-400 transition cursor-pointer ${
+            className={`hidden lg:block absolute top-2 right-2 z-10 p-1.5 bg-black/70 rounded-lg text-secondary hover:text-violet-400 transition cursor-pointer ${
               hovered ? "opacity-100" : "opacity-0"
             }`}
           >
@@ -79,7 +79,7 @@ export default function BookCard({ entry, onDeleted, onUpdated }: Props) {
               e.stopPropagation()
               setOpen(true)
             }}
-            className={`hidden lg:block absolute top-2 right-2 z-10 p-1.5 bg-black/70 rounded-lg text-zinc-400 hover:text-violet-400 transition ${
+            className={`hidden lg:block absolute top-2 right-2 z-10 p-1.5 bg-black/70 rounded-lg text-secondary hover:text-violet-400 transition ${
               hovered ? "opacity-100" : "opacity-0"
             }`}
           ></button>
@@ -88,7 +88,7 @@ export default function BookCard({ entry, onDeleted, onUpdated }: Props) {
               e.stopPropagation()
               handleDelete()
             }}
-            className={`hidden lg:block absolute top-2 left-2 z-10 p-1.5 bg-black/70 rounded-lg text-zinc-400 hover:text-red-400 transition ${
+            className={`hidden lg:block absolute top-2 left-2 z-10 p-1.5 bg-black/70 rounded-lg text-secondary hover:text-red-400 transition ${
               hovered ? "opacity-100" : "opacity-0"
             }`}
           >
@@ -109,7 +109,7 @@ export default function BookCard({ entry, onDeleted, onUpdated }: Props) {
 
           {menuOpen && (
             <div
-              className="absolute top-10 left-2 z-20 bg-zinc-800 border border-zinc-700 rounded-xl overflow-hidden shadow-xl"
+              className="absolute top-10 left-2 z-20 bg-input border border-zinc-700 rounded-xl overflow-hidden shadow-xl"
               onClick={(e) => e.stopPropagation()}
             >
               <button
@@ -193,7 +193,7 @@ export default function BookCard({ entry, onDeleted, onUpdated }: Props) {
           )}
 
           {entry.status === "reading" && entry.progress_percent !== null && (
-            <div className="absolute bottom-0 left-0 right-0 h-1 bg-zinc-800">
+            <div className="absolute bottom-0 left-0 right-0 h-1 bg-input">
               <div
                 className="h-full bg-violet-500"
                 style={{ width: `${entry.progress_percent}%` }}
@@ -209,11 +209,11 @@ export default function BookCard({ entry, onDeleted, onUpdated }: Props) {
         </div>
 
         <div>
-          <p className="text-white text-sm font-medium line-clamp-2">
+          <p className="text-app text-sm font-medium line-clamp-2">
             {entry.books.title}
           </p>
           {entry.books.authors && (
-            <p className="text-zinc-500 text-xs">{entry.books.authors.name}</p>
+            <p className="text-muted text-xs">{entry.books.authors.name}</p>
           )}
         </div>
       </div>

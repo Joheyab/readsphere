@@ -8,7 +8,8 @@ export async function getBookById(bookId: string) {
     .select(`
       id,
       title,
-      description,
+      description_en,
+      description_es,
       isbn,
       cover_url,
       pages,
@@ -18,6 +19,7 @@ export async function getBookById(bookId: string) {
     `)
     .eq("id", bookId)
     .single();
+    
 
   if (error) throw new Error(error.message);
   return data;

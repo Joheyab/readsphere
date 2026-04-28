@@ -102,12 +102,12 @@ export default function EditBookModal({
 
   return (
     <div className="fixed inset-0 z-50 bg-black/70 flex items-center justify-center p-4 text-sm">
-      <div className="w-full max-w-lg rounded-2xl bg-zinc-900 border border-zinc-800 p-6">
-        <h2 className="text-lg font-semibold text-white mb-4">Editar libro</h2>
+      <div className="w-full max-w-lg rounded-2xl bg-card border border-app p-6">
+        <h2 className="text-lg font-semibold text-app mb-4">Editar libro</h2>
         <div className="flex items-center justify-between py-2">
           <div>
-            <p className="text-sm text-white">Libro privado</p>
-            <p className="text-xs text-zinc-500">Solo tú puedes verlo</p>
+            <p className="text-sm text-app">Libro privado</p>
+            <p className="text-xs text-muted">Solo tú puedes verlo</p>
           </div>
           <button
             type="button"
@@ -124,7 +124,7 @@ export default function EditBookModal({
           </button>
         </div>
         <div className="space-y-4">
-          <label className="block text-xs text-zinc-400 mb-1.5">
+          <label className="block text-xs text-secondary mb-1.5">
             ¿En que estado estás con este libro?
             <span className="text-red-400"> *</span>
           </label>
@@ -133,7 +133,7 @@ export default function EditBookModal({
             onChange={(e) =>
               handleStatusChange(e.target.value as ReadingStatus)
             }
-            className="w-full bg-zinc-800 rounded-lg p-3 text-white text-sm focus:outline-none focus:border-violet-500 transition border border-zinc-700 cursor-pointer"
+            className="w-full bg-input rounded-lg p-3 text-app text-sm focus:outline-none focus:border-violet-500 transition border border-zinc-700 cursor-pointer"
           >
             <option value="want_to_read">Quiero leer</option>
             <option value="reading">Leyendo</option>
@@ -141,45 +141,45 @@ export default function EditBookModal({
           </select>
 
           <div>
-            <label className="block text-xs text-zinc-400 mb-1.5">
+            <label className="block text-xs text-secondary mb-1.5">
               ¿Donde compraste este libro?
             </label>
             <input
               value={purchasePlace}
               onChange={(e) => setPurchasePlace(e.target.value)}
               placeholder="Libreria X, Amazon, etc."
-              className="w-full bg-zinc-800 rounded-lg p-3 text-white focus:outline-none focus:border-violet-500 transition border border-zinc-700"
+              className="w-full bg-input rounded-lg p-3 text-app focus:outline-none focus:border-violet-500 transition border border-zinc-700"
             />
           </div>
 
           <div className="grid grid-cols-2 gap-3">
             <div className="h-full flex flex-col">
-              <label className="block text-xs text-zinc-400 mb-1.5">
+              <label className="block text-xs text-secondary mb-1.5">
                 ¿Cuándo comenzaste a leer este libro?
               </label>
               <input
                 type="date"
                 value={startDate}
                 onChange={(e) => setStartDate(e.target.value)}
-                className="bg-zinc-800 rounded-lg p-3 text-white focus:outline-none focus:border-violet-500 transition border border-zinc-700 cursor-pointer"
+                className="bg-input rounded-lg p-3 text-app focus:outline-none focus:border-violet-500 transition border border-zinc-700 cursor-pointer"
               />
             </div>
             <div className="h-full flex flex-col">
-              <label className="block text-xs text-zinc-400 mb-1.5">
+              <label className="block text-xs text-secondary mb-1.5">
                 ¿Cuándo terminaste de leer este libro?
               </label>
               <input
                 type="date"
                 value={finishDate}
                 onChange={(e) => setFinishDate(e.target.value)}
-                className="bg-zinc-800 rounded-lg p-3 text-white focus:outline-none focus:border-violet-500 transition border border-zinc-700 cursor-pointer"
+                className="bg-input rounded-lg p-3 text-app focus:outline-none focus:border-violet-500 transition border border-zinc-700 cursor-pointer"
               />
             </div>
           </div>
 
           {status === "reading" && (
             <div>
-              <label className="block text-xs text-zinc-400 mb-1.5">
+              <label className="block text-xs text-secondary mb-1.5">
                 ¿Por cuál página estás?
                 <span className="text-red-400"> *</span>
               </label>
@@ -190,9 +190,9 @@ export default function EditBookModal({
                 value={currentPage}
                 onChange={(e) => setCurrentPage(Number(e.target.value))}
                 placeholder="Página actual"
-                className="w-full bg-zinc-800 rounded-lg p-3 text-white focus:outline-none focus:border-violet-500 transition border border-zinc-700"
+                className="w-full bg-input rounded-lg p-3 text-app focus:outline-none focus:border-violet-500 transition border border-zinc-700"
               />
-              <p className="text-sm text-zinc-400 mt-1">
+              <p className="text-sm text-secondary mt-1">
                 Progreso: {progressPercent}%
               </p>
             </div>
@@ -200,7 +200,7 @@ export default function EditBookModal({
 
           {status === "finished" && (
             <div>
-              <label className="block text-xs text-zinc-400 mb-1.5">
+              <label className="block text-xs text-secondary mb-1.5">
                 ¿Qué calificación le das a este libro?
               </label>
               <div className="flex gap-1">
@@ -228,7 +228,7 @@ export default function EditBookModal({
             </div>
           )}
           <div>
-            <label className="block text-xs text-zinc-400 mb-1.5">
+            <label className="block text-xs text-secondary mb-1.5">
               Precio de compra
             </label>
             <input
@@ -236,17 +236,17 @@ export default function EditBookModal({
               value={price}
               onChange={(e) => setPrice(e.target.value)}
               placeholder="1000"
-              className="w-full bg-zinc-800 rounded-lg p-3 text-white focus:outline-none focus:border-violet-500 transition border border-zinc-700"
+              className="w-full bg-input rounded-lg p-3 text-app focus:outline-none focus:border-violet-500 transition border border-zinc-700"
             />
           </div>
           <div>
-            <label className="block text-xs text-zinc-400 mb-1.5">
+            <label className="block text-xs text-secondary mb-1.5">
               Formato del libro
             </label>
             <select
               value={format}
               onChange={(e) => setFormat(e.target.value)}
-              className="w-full bg-zinc-800 rounded-lg p-3 text-white focus:outline-none focus:border-violet-500 transition border border-zinc-700 cursor-pointer"
+              className="w-full bg-input rounded-lg p-3 text-app focus:outline-none focus:border-violet-500 transition border border-zinc-700 cursor-pointer"
             >
               <option value="">Sin definir</option>
               <option value="physical">Físico</option>
@@ -259,14 +259,14 @@ export default function EditBookModal({
         <div className="flex justify-end gap-3 mt-6">
           <button
             onClick={onClose}
-            className="px-4 py-2 rounded-lg bg-zinc-700 text-white cursor-pointer hover:bg-zinc-600 transition"
+            className="px-4 py-2 rounded-lg bg-zinc-700 text-app cursor-pointer hover:bg-zinc-600 transition"
           >
             Cancelar
           </button>
           <button
             onClick={handleSave}
             disabled={disabledButton()}
-            className="px-4 py-2 rounded-lg bg-violet-600 text-white cursor-pointer hover:bg-violet-500 transition disabled:bg-zinc-800 disabled:cursor-not-allowed"
+            className="px-4 py-2 rounded-lg bg-violet-600 text-app cursor-pointer hover:bg-violet-500 transition disabled:bg-input disabled:cursor-not-allowed"
           >
             Guardar
           </button>

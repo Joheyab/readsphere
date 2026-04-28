@@ -1,26 +1,52 @@
 @import "tailwindcss";
 
+@variant dark (&:where(.dark, .dark *));
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --bg-primary: #f8fafc;
+  --bg-secondary: #ffffff;
+  --bg-card: #ffffff;
+  --bg-input: #f1f5f9;
+  --bg-hover: #f1f5f9;
+  --border: #e2e8f0;
+  --text-primary: #09090b;
+  --text-secondary: #71717a;
+  --text-muted: #a1a1aa;
+  --sidebar: #ffffff;
+  --bg-mid: rgba(241, 244, 248, 0.979);
+  --text-button: #ffffff;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+.dark {
+  --bg-primary: #09090b;
+  --bg-secondary: #18181b;
+  --bg-card: #18181b;
+  --bg-input: #27272a;
+  --bg-hover: #27272a;
+  --border: #27272a;
+  --text-primary: #ffffff;
+  --text-secondary: #a1a1aa;
+  --text-muted: #52525b;
+  --sidebar: #18181b;
+  --bg-mid: #0a0a0f;
+  --text-button: #ffffff;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+@layer utilities {
+  .bg-app { background-color: var(--bg-primary); }
+  .bg-card { background-color: var(--bg-card); }
+  .bg-input { background-color: var(--bg-input); }
+  .bg-hover:hover { background-color: var(--bg-hover); }
+  .border-app { border-color: var(--border); }
+  .text-app { color: var(--text-primary); }
+  .text-secondary { color: var(--text-secondary); }
+  .text-muted { color: var(--text-muted); }
+  .sidebar-bg { background-color: var(--sidebar); }
+  .bg-mid { background-color: var(--bg-mid); }
+  .text-button { color: var(--text-button); }
 }

@@ -1,28 +1,34 @@
 "use client"
 
+import { useProfile } from "@/context/ProfileContext"
 import Link from "next/link"
 import LogoutButton from "../auth/LogoutButton"
-import { useProfile } from "@/context/ProfileContext";
+import ThemeLanguageToggle from "./ThemeLanguageToggle"
+import { useTranslations } from "next-intl"
+
 const DesktopNav = () => {
   const { profile } = useProfile()
+  const t = useTranslations("nav")
 
   return (
-    <aside className="hidden lg:flex h-screen w-72 shrink-0 border-r border-zinc-800 bg-zinc-900 p-6 flex-col">
+    <aside className="hidden lg:flex h-screen w-72 shrink-0 border-r border-app bg-card p-6 flex-col">
       <div>
         <div className="mb-10 flex flex-col items-center ">
           <h1 className="text-2xl font-bold">📚 ReadSphere</h1>
-          <p className="mt-2 text-sm text-zinc-400">Tu biblioteca social</p>
-          <div className="relative h-20 w-20 rounded-full overflow-hidden bg-zinc-800 border border-zinc-700 flex items-center justify-center shrink-0">
+
+          <p className="mt-2 text-sm text-secondary">
+            {t("tagline")}
+          </p>
+
+          <div className="relative h-20 w-20 rounded-full overflow-hidden bg-input border border-zinc-700 flex items-center justify-center shrink-0">
             {profile?.avatar_url ? (
-              <div>
-                <img
-                  src={profile.avatar_url}
-                  alt="Avatar"
-                  className="w-full h-full object-fill"
-                />
-              </div>
+              <img
+                src={profile.avatar_url}
+                alt="Avatar"
+                className="w-full h-full object-fill"
+              />
             ) : (
-              <span className="text-zinc-400 text-sm font-medium">
+              <span className="text-secondary text-sm font-medium">
                 {profile?.username?.[0]?.toUpperCase() ?? "?"}
               </span>
             )}
@@ -32,27 +38,29 @@ const DesktopNav = () => {
         <nav className="space-y-3">
           <Link
             href="/"
-            className="block rounded-xl px-4 py-3 transition hover:bg-zinc-800"
+            className="block rounded-xl px-4 py-3 transition hover:bg-input"
           >
-            Inicio
+            {t("home")}
           </Link>
+
           <Link
             href="/library"
-            className="block rounded-xl px-4 py-3 transition hover:bg-zinc-800"
+            className="block rounded-xl px-4 py-3 transition hover:bg-input"
           >
-            Mi biblioteca
+            {t("library")}
           </Link>
+
           <Link
             href={`/profile/${profile?.username}`}
-            className="block rounded-xl px-4 py-3 transition hover:bg-zinc-800"
+            className="block rounded-xl px-4 py-3 transition hover:bg-input"
           >
-            Perfil
+            {t("profile")}
           </Link>
         </nav>
       </div>
 
-      {/* Logout al fondo */}
-      <div className="mt-auto pt-6">
+      <div className="mt-auto pt-6 flex gap-2 flex-col">
+        <ThemeLanguageToggle />
         <LogoutButton />
       </div>
     </aside>
