@@ -14,7 +14,7 @@ const DesktopNav = () => {
     <aside className="hidden lg:flex h-screen w-72 shrink-0 border-r border-app bg-card p-6 flex-col">
       <div>
         <div className="mb-10 flex flex-col items-center ">
-          <h1 className="text-2xl font-bold">📚 ReadSphere</h1>
+          <h1 className="text-2xl font-bold">📚 <span className="text-violet-500">Read</span>Sphere</h1>
 
           <p className="mt-2 text-sm text-secondary">
             {t("tagline")}

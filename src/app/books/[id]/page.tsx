@@ -1,5 +1,6 @@
 "use client"
 
+import { normalizeGenreKey } from "@/app/utils/normalizeGenreKey"
 import BookReviews from "@/components/book/BookReviews"
 import { useTranslations } from "next-intl"
 import { useParams, useRouter } from "next/navigation"
@@ -8,8 +9,7 @@ import { useEffect, useState } from "react"
 type Book = {
   id: string
   title: string
-  description_en: string | null
-  description_es: string | null
+  description: string | null
   isbn: string | null
   cover_url: string | null
   pages: number | null
@@ -131,7 +131,7 @@ export default function BookPage() {
                     key={i}
                     className="px-2 py-1 text-xs rounded-lg bg-input text-secondary border border-zinc-700"
                   >
-                    {bg.genres.name}
+                    {t(`genres.${normalizeGenreKey(bg.genres.name)}`)}
                   </span>
                 ) : null,
               )}
@@ -181,9 +181,9 @@ export default function BookPage() {
           {t("book.description")}
         </h2>
         <p className="text-secondary leading-relaxed text-sm">
-          {book.description_es
-            ? book.description_es
-            : book.description_en || t("book.noDescription")}
+          {book.description
+            ? book.description
+            : t("book.noDescription")}
         </p>
       </div>
 

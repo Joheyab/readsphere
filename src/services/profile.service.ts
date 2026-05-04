@@ -63,7 +63,7 @@ export async function getPublicProfile(username: string) {
     .from("user_achievements")
     .select(`
       unlocked_at,
-      achievements ( code, title, description )
+      achievements ( code )
     `)
     .eq("user_id", profile.id)
     .order("unlocked_at", { ascending: false });

@@ -1,5 +1,5 @@
 {
-   "nav": {
+  "nav": {
     "home": "🏠 Home",
     "library": "📚 My library",
     "profile": "📊 Profile",
@@ -46,7 +46,7 @@
     "notIsYourBookSearching": "Not the one you were looking for?",
     "notFound": "We couldn't find ",
     "inYourLibrary": "in your collection",
-    "addTo":"+ Add ",
+    "addTo": "+ Add ",
     "manually": "manually",
     "addTitleToAdd": "Type the title of the book you want to add",
     "addAuthorToAdd": "Type the name of the author",
@@ -55,7 +55,8 @@
     "addSinopsis": "Add a synopsis",
     "uploadImage": "Upload image",
     "clickToUpload": "Click to upload",
-    "newBook": "New book"
+    "newBook": "New book",
+    "readingStatus": "Reading status"
   },
   "book": {
     "description": "Description",
@@ -90,9 +91,17 @@
     "unfollow": "Following",
     "achievements": "Achievements",
     "noAchievements": "No achievements unlocked yet.",
+    "noAchievementsPublic": "This user has no unlocked achievements.",
+    "noReviews": "No reviews yet.",
     "recentReads": "Recent reads",
     "progress": "Progress",
-    "editProfile": "Edit profile"
+    "editProfile": "Edit profile",
+    "notPublicBooks": "No public books to show.",
+    "welcome": "Welcome to your profile, {name}!",
+    "description": "Keep track of your books, share reviews, and measure your progress.",
+    "libraryTab": "{count, plural, =0 {Library (0)} one {Library (1)} other {Library ({count})}}",
+    "reviewsTab": "{count, plural, =0 {Reviews (0)} one {Reviews (1)} other {Reviews ({count})}}",
+    "achievementsTab": "{count, plural, =0 {Achievements (0)} one {Achievements (1)} other {Achievements ({count})}}"
   },
   "feed": {
     "title": "For you",
@@ -146,6 +155,163 @@
     "sin_definir": "Not defined",
     "comedia": "Comedy",
     "aventura": "Adventure",
-    "accion": "Action"
+    "accion": "Action",
+    "drama": "Drama",
+    "ficcion_historica": "Historical fiction",
+    "distopia": "Dystopia",
+    "clasicos": "Classics",
+    "novela_grafica": "Graphic novels",
+    "infantil": "Children",
+    "juvenil": "Young adult",
+    "manga": "Manga",
+    "negocios": "Business",
+    "tecnologia": "Technology",
+    "psicologia": "Psychology",
+    "politica": "Politics",
+    "arte": "Art",
+    "cocina": "Cooking",
+    "viajes": "Travel",
+    "deporte": "Sports",
+    "religion": "Religion",
+    "ciencia": "Science"
+  },
+  "achievements": {
+    "first_book": {
+      "title": "First Book",
+      "description": "You added your first book to your library"
+    },
+    "read_5": {
+      "title": "Regular Reader",
+      "description": "You finished 5 books"
+    },
+    "read_10": {
+      "title": "Book Devourer",
+      "description": "You finished 10 books"
+    },
+    "read_50": {
+      "title": "Bibliophile",
+      "description": "You finished 50 books"
+    },
+    "first_finish": {
+      "title": "First Finish",
+      "description": "You marked your first book as completed"
+    },
+    "genres_3": {
+      "title": "Explorer",
+      "description": "You read books from 3 different genres"
+    },
+    "genres_5": {
+      "title": "Curious",
+      "description": "You read books from 5 different genres"
+    },
+    "streak_7": {
+      "title": "Weekly Streak",
+      "description": "7 consecutive days with activity"
+    },
+
+    "read_1_day": {
+      "title": "Fast Start",
+      "description": "You finished a book in one day"
+    },
+    "night_reader": {
+      "title": "Night Owl",
+      "description": "You read after midnight"
+    },
+    "early_reader": {
+      "title": "Early Bird",
+      "description": "You read before 6 AM"
+    },
+    "weekend_reader": {
+      "title": "Weekend Active",
+      "description": "You read on both Saturday and Sunday"
+    },
+    "add_10_books": {
+      "title": "Collector",
+      "description": "You added 10 books to your library"
+    },
+    "add_50_books": {
+      "title": "Growing Library",
+      "description": "You added 50 books"
+    },
+    "favorites_5": {
+      "title": "Good Taste",
+      "description": "You marked 5 books as favorites"
+    },
+    "review_1": {
+      "title": "New Critic",
+      "description": "You wrote your first review"
+    },
+    "review_10": {
+      "title": "Expert Critic",
+      "description": "You wrote 10 reviews"
+    },
+    "rating_10": {
+      "title": "Rater",
+      "description": "You rated 10 books"
+    },
+    "long_book": {
+      "title": "Deep Reader",
+      "description": "You finished a long book (+500 pages)"
+    },
+    "short_books_5": {
+      "title": "Quick Reads",
+      "description": "You finished 5 short books"
+    },
+    "series_3": {
+      "title": "Series Fan",
+      "description": "You read 3 books from the same series"
+    },
+    "author_5": {
+      "title": "Loyal Reader",
+      "description": "You read 5 books from the same author"
+    },
+    "discover_new_author": {
+      "title": "Discoverer",
+      "description": "You read a new author"
+    },
+    "complete_month": {
+      "title": "Full Month",
+      "description": "You read every day for a month"
+    },
+    "streak_30": {
+      "title": "Consistent",
+      "description": "30 consecutive days reading"
+    },
+    "read_100": {
+      "title": "Legend",
+      "description": "You finished 100 books"
+    },
+    "wishlist_10": {
+      "title": "Dreamer",
+      "description": "You added 10 books to your wishlist"
+    },
+    "first_share": {
+      "title": "Social",
+      "description": "You shared your first book"
+    },
+    "profile_complete": {
+      "title": "Profile Complete",
+      "description": "You completed all your profile information"
+    },
+    "avatar_set": {
+      "title": "Identity",
+      "description": "You added a profile picture"
+    },
+    "genre_fantasy": {
+      "title": "Fantasy Lover",
+      "description": "You read your first fantasy book"
+    },
+    "genre_scifi": {
+      "title": "Space Explorer",
+      "description": "You read your first science fiction book"
+    },
+    "genre_romance": {
+      "title": "Romantic Soul",
+      "description": "You read your first romance book"
+    },
+    "genre_horror": {
+      "title": "Brave Reader",
+      "description": "You read a horror book"
+    }
   }
 }

@@ -38,6 +38,8 @@ type OpenLibraryResult = {
     year?: number
     number_of_pages?: number
     pagination?: string
+    subjects?: string[]
+    description?: string | null
   }
   editions: {
     key: string
@@ -119,6 +121,12 @@ export default function AddBookModal({ onClose, onAdded }: Props) {
       )
 
       const searchData = await searchRes.json()
+
+      if (!searchData.docs || searchData.docs.length === 0) {
+        setOpenLibraryResults(null)
+        setSearchingExternal(false)
+        return
+      }
       const normalizedQuery = normalizeText(query)
 
       // 🧠 2. SCORING
@@ -152,9 +160,29 @@ export default function AddBookModal({ onClose, onAdded }: Props) {
       })
 
       const bestMatch = scored.sort((a: any, b: any) => b._score - a._score)[0]
+      const workRes = await fetch(
+        `https://openlibrary.org${bestMatch.key}.json`,
+      )
+      const workData = await workRes.json()
+      const rawDescription =
+        typeof workData.description === "string"
+          ? workData.description
+          : (workData.description?.value ?? null)
+
+      // Limpiar markdown y referencias
+      const cleanDescription = rawDescription
+        ? rawDescription
+            .replace(/\[([^\]]+)\]\([^)]+\)/g, "$1") // quita links markdown
+            .replace(/\[source\]\[\d+\]/g, "") // quita [source][1]
+            .replace(/\[\d+\]:\s*https?:\/\/\S+/g, "") // quita referencias de links
+            .replace(/\r\n\r\n[-]{3,}\r\n[\s\S]*/g, "") // quita todo desde el separador ---
+            .replace(/\r\n/g, "\n") // normaliza saltos de línea
+            .trim()
+        : null
 
       if (!bestMatch) {
         setOpenLibraryResults(null)
+        setSearchingExternal(false)
         return
       }
 
@@ -165,7 +193,6 @@ export default function AddBookModal({ onClose, onAdded }: Props) {
 
       const editionsData = await editionsRes.json()
 
-      console.log(editionsData)
       // 🔢 función ISBN limpia
       const cleanIsbns = (isbns: string[] = []) => {
         const cleaned = isbns
@@ -231,12 +258,13 @@ export default function AddBookModal({ onClose, onAdded }: Props) {
           author: bestMatch.author_name?.[0],
           year: bestMatch.publish_date,
           number_of_pages: bestMatch.number_of_pages,
+          subjects: workData.subjects ?? [],
+          description: cleanDescription,
         },
         editions: finalEditions,
       })
-      console.log(openLibraryResults)
     } catch (error) {
-      console.error(error)
+      throw error
     } finally {
       setSearchingExternal(false)
     }
@@ -245,12 +273,9 @@ export default function AddBookModal({ onClose, onAdded }: Props) {
   async function handleSelectOpenLibraryBook(book: any, work: any) {
     setCreating(true)
     setError("")
-    console.log("Selected Open Library book:", { book, work })
 
     const authorName = work.author ?? "Autor desconocido"
     const isbn = book.isbn?.[0] ?? null
-
-    setCreating(false)
     const coverUrl = book.cover_i
       ? `https://covers.openlibrary.org/b/id/${book.cover_i}-L.jpg`
       : null
@@ -294,6 +319,7 @@ export default function AddBookModal({ onClose, onAdded }: Props) {
         pages: book.number_of_pages || null,
         published_year: book.publish_date ?? null,
         author_id: authorData.id,
+        description: work.description ?? null,
       })
       .select("id")
       .single()
@@ -303,9 +329,88 @@ export default function AddBookModal({ onClose, onAdded }: Props) {
       setCreating(false)
       return
     }
-    setStep("status")
-    setCreating(false)
+
+    // 4. 👇 Mapear y guardar géneros
+    const genreMapping: Record<string, string> = {
+      Comedy: "Comedia",
+      Humour: "Comedia",
+      Crime: "Crimen",
+      Mystery: "Misterio",
+      Suspense: "Suspenso",
+      Thriller: "Thriller",
+      Romance: "Romance",
+      "Love stories": "Romance",
+      "Dark romance": "Dark Romance",
+      "Science fiction": "Ciencia Ficción",
+      "Sci-fi": "Ciencia Ficción",
+      Adventure: "Aventura",
+      Fantasy: "Fantasía",
+      "Epic fantasy": "Fantasía",
+      Action: "Acción",
+      Horror: "Terror",
+      "Ghost stories": "Terror",
+      Drama: "Drama",
+      History: "Historia",
+      "Historical fiction": "Ficción histórica",
+      Biography: "Biografía",
+      Autobiography: "Biografía",
+      "Self-help": "Autoayuda",
+      "Personal development": "Autoayuda",
+      Science: "Ciencia",
+      Philosophy: "Filosofía",
+      Poetry: "Poesía",
+      Children: "Infantil",
+      "Juvenile fiction": "Juvenil",
+      "Young adult": "Juvenil",
+      Manga: "Manga",
+      Business: "Negocios",
+      Economics: "Negocios",
+      Technology: "Tecnología",
+      Psychology: "Psicología",
+      Politics: "Política",
+      Art: "Arte",
+      Cooking: "Cocina",
+      Travel: "Viajes",
+      Sports: "Deporte",
+      Religion: "Religión",
+      Dystopia: "Distopía",
+      "Dystopian fiction": "Distopía",
+      Classics: "Clásicos",
+      "Graphic novels": "Novela gráfica",
+      Comics: "Novela gráfica",
+    }
+
+    if (work.subjects && work.subjects.length > 0) {
+      const mappedGenreNames = work.subjects
+        .map((subject: string) => {
+          const key = Object.keys(genreMapping).find(
+            (k) => k.toLowerCase() === subject.toLowerCase(),
+          )
+          return key ? genreMapping[key] : null
+        })
+        .filter(Boolean) as string[]
+
+      const uniqueGenres = [...new Set(mappedGenreNames)]
+
+      if (uniqueGenres.length > 0) {
+        const { data: genreData } = await supabase
+          .from("genres")
+          .select("id, name")
+          .in("name", uniqueGenres)
+
+        if (genreData && genreData.length > 0) {
+          await supabase
+            .from("book_genres")
+            .insert(
+              genreData.map((g) => ({ book_id: bookData.id, genre_id: g.id })),
+            )
+        }
+      }
+    }
+
     setSelectedBookId(bookData.id)
+    setCreating(false)
+    setStep("status")
   }
   // Load genres on mount
   useEffect(() => {
@@ -477,9 +582,9 @@ export default function AddBookModal({ onClose, onAdded }: Props) {
     const res = await fetch("/api/achievements/check", { method: "POST" })
     const { unlocked } = await res.json()
 
-    unlocked.forEach((achievement: { title: string; description: string }) => {
-      toast.success(`🏆 ${achievement.title}`, {
-        description: achievement.description,
+    unlocked.forEach((achievement: { code: string }) => {
+      toast.success(`🏆 ${t(`achievements.${achievement.code}.title`)}`, {
+        description: t(`achievements.${achievement.code}.description`),
         duration: 5000,
       })
     })
@@ -1251,7 +1356,7 @@ export default function AddBookModal({ onClose, onAdded }: Props) {
                         : "bg-input/50 border-zinc-700 text-secondary hover:border-zinc-600"
                     }`}
                   >
-                    {t(opt.value)}
+                    {t(`library.${opt.value}`)}
                     {status === opt.value && (
                       <svg
                         className="w-4 h-4 text-violet-400"

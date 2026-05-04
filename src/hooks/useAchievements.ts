@@ -7,8 +7,6 @@ type Achievement = {
   achievements: {
     id: string;
     code: string;
-    title: string;
-    description: string;
   };
 };
 

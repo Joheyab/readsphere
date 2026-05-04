@@ -1,6 +1,8 @@
 "use client"
 
+import { normalizeGenreKey } from "@/app/utils/normalizeGenreKey"
 import { PublicProfile } from "@/types/profile"
+import { useTranslations } from "next-intl"
 import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
 
@@ -17,6 +19,9 @@ export default function PublicProfilePage({ username }: { username: string }) {
     isFollowing: false,
   })
   const [followLoading, setFollowLoading] = useState(false)
+  const t = useTranslations()
+
+  
 
   useEffect(() => {
     if (!data?.profile.id) return
@@ -71,10 +76,19 @@ export default function PublicProfilePage({ username }: { username: string }) {
   const { profile, stats, library, reviews, achievements } = data
 
   const tabs = [
-    { key: "library", label: `Biblioteca (${library.length})` },
-    { key: "reviews", label: `Reseñas (${reviews.length})` },
-    { key: "achievements", label: `Logros (${achievements.length})` },
-  ] as const
+  {
+    key: "library",
+    label: t("profile.libraryTab", { count: library.length }),
+  },
+  {
+    key: "reviews",
+    label: t("profile.reviewsTab", { count: reviews.length }),
+  },
+  {
+    key: "achievements",
+    label: t("profile.achievementsTab", { count: achievements.length }),
+  },
+] as const
 
   return (
     <div className="max-w-3xl mx-auto space-y-8">
@@ -116,8 +130,8 @@ export default function PublicProfilePage({ username }: { username: string }) {
               {followLoading
                 ? "..."
                 : followData.isFollowing
-                  ? "Siguiendo"
-                  : "Seguir"}
+                  ? t("profile.unfollow")
+                  : t("profile.follow")}
             </button>
           </div>
           {profile.bio && (
@@ -130,7 +144,7 @@ export default function PublicProfilePage({ username }: { username: string }) {
                   key={genre}
                   className="px-2 py-0.5 text-xs rounded-lg bg-input text-secondary border border-zinc-700"
                 >
-                  {genre}
+                  {t(`genres.${normalizeGenreKey(genre)}`)}
                 </span>
               ))}
             </div>
@@ -138,11 +152,11 @@ export default function PublicProfilePage({ username }: { username: string }) {
           <div className="flex gap-4 mt-2 text-sm">
             <span className="text-app font-medium">
               {followData.followers}{" "}
-              <span className="text-muted font-normal">seguidores</span>
+              <span className="text-muted font-normal">{t("profile.followers")}</span>
             </span>
             <span className="text-app font-medium">
               {followData.following}{" "}
-              <span className="text-muted font-normal">siguiendo</span>
+              <span className="text-muted font-normal">{t("profile.following")}</span>
             </span>
           </div>
         </div>
@@ -151,13 +165,13 @@ export default function PublicProfilePage({ username }: { username: string }) {
       {/* Stats */}
       <div className="grid grid-cols-2 gap-4">
         <div className="rounded-2xl border border-app bg-card p-4">
-          <p className="text-xs text-muted">Libros leídos</p>
+          <p className="text-xs text-muted">{t("profile.booksFinished")}</p>
           <p className="text-2xl font-bold text-app mt-1">
             {stats.booksFinished}
           </p>
         </div>
         <div className="rounded-2xl border border-app bg-card p-4">
-          <p className="text-xs text-muted">Leyendo ahora</p>
+          <p className="text-xs text-muted">{t("profile.reading")}</p>
           <p className="text-2xl font-bold text-app mt-1">
             {stats.booksReading}
           </p>
@@ -186,7 +200,7 @@ export default function PublicProfilePage({ username }: { username: string }) {
         <div>
           {library.length === 0 ? (
             <p className="text-muted text-sm text-center py-8">
-              No hay libros públicos.
+              {t("profile.notPublicBooks")}
             </p>
           ) : (
             <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-4">
@@ -229,7 +243,7 @@ export default function PublicProfilePage({ username }: { username: string }) {
         <div className="space-y-4">
           {reviews.length === 0 ? (
             <p className="text-muted text-sm text-center py-8">
-              No hay reseñas aún.
+              {t("profile.notReviews")}
             </p>
           ) : (
             reviews.map((review) => (
@@ -286,7 +300,7 @@ export default function PublicProfilePage({ username }: { username: string }) {
         <div>
           {achievements.length === 0 ? (
             <p className="text-muted text-sm text-center py-8">
-              Aún no hay logros.
+              {t("profile.noAchievementsPublic")}
             </p>
           ) : (
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
@@ -296,10 +310,10 @@ export default function PublicProfilePage({ username }: { username: string }) {
                   className="flex flex-col gap-1 p-4 rounded-2xl border border-app bg-card"
                 >
                   <p className="text-app text-sm font-medium">
-                    {entry.achievements?.title}
+                    {t(`achievements.${entry.achievements?.code}.title`)}
                   </p>
                   <p className="text-muted text-xs">
-                    {entry.achievements?.description}
+                    {t(`achievements.${entry.achievements?.code}.description`)}
                   </p>
                   <p className="text-zinc-600 text-xs mt-1">
                     {new Date(entry.unlocked_at).toLocaleDateString("es-CR")}

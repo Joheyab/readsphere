@@ -8,8 +8,7 @@ export async function getBookById(bookId: string) {
     .select(`
       id,
       title,
-      description_en,
-      description_es,
+      description,
       isbn,
       cover_url,
       pages,

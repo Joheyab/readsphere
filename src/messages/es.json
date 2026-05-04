@@ -46,7 +46,7 @@
     "notIsYourBookSearching": "¿No es el que andabas buscando?",
     "notFound": "No encontramoos ",
     "inYourLibrary": "en tu catálogo",
-    "addTo":"+ Añadir ",
+    "addTo": "+ Añadir ",
     "manually": "manualmente",
     "addTitleToAdd": "Escribe el título del libro que quieres agregar",
     "addAuthorToAdd": "Escribe el nombre del autor",
@@ -55,7 +55,8 @@
     "addSinopsis": "Agregar sinopsis",
     "uploadImage": "Subir imagen",
     "clickToUpload": "Haz click para subir",
-    "newBook": "Nuevo libro"
+    "newBook": "Nuevo libro",
+    "readingStatus": "Estado de lectura"
   },
   "book": {
     "description": "Descripción",
@@ -90,9 +91,17 @@
     "unfollow": "Siguiendo",
     "achievements": "Logros",
     "noAchievements": "Aún no tienes logros desbloqueados.",
+    "noAchievmentsPublic": "Este usuario no tiene logros desbloqueados.",
     "recentReads": "Lecturas recientes",
     "progress": "Progreso",
-    "editProfile": "Editar perfil"
+    "notPublicBooks": "No hay libros públicos para mostrar.",
+    "notReviews": "Aún no hay reseñas.",
+    "editProfile": "Editar perfil",
+    "welcome": "¡Bienvenido a tu perfil, {name}!",
+    "description": "Lleva control de tus libros, comparte reseñas y mide tu progreso.",
+    "libraryTab": "{count, plural, =0 {Biblioteca (0)} one {Biblioteca (1)} other {Biblioteca ({count})}}",
+    "reviewsTab": "{count, plural, =0 {Reseñas (0)} one {Reseñas (1)} other {Reseñas ({count})}}",
+    "achievementsTab": "{count, plural, =0 {Logros (0)} one {Logros (1)} other {Logros ({count})}}"
   },
   "feed": {
     "title": "Para ti",
@@ -131,22 +140,177 @@
   "genres": {
     "fantasia": "Fantasía",
     "romance": "Romance",
-    "ciencia_ficcion": "Ciencia ficción",
+    "ciencia_ficcion": "Ciencia Ficción",
     "autoayuda": "Autoayuda",
-    "misterio": "Misterio",
-    "historia": "Histórico",
-    "thriller": "Thriller",
-    "no_ficcion": "No ficción",
+    "crimen": "Crimen",
+    "historia": "Historia",
     "biografia": "Biografía",
     "filosofia": "Filosofía",
     "poesia": "Poesía",
-    "horror": "Horror",
-    "crimen": "Crimen",
+    "horror": "Terror",
+    "misterio": "Misterio",
+    "thriller": "Thriller",
     "dark_romance": "Dark Romance",
     "suspenso": "Suspenso",
-    "sin_definir": "No definido",
+    "sin_definir": "Sin definir",
     "comedia": "Comedia",
     "aventura": "Aventura",
-    "accion": "Acción"
+    "accion": "Acción",
+    "drama": "Drama",
+    "ficcion_historica": "Ficción histórica",
+    "distopia": "Distopía",
+    "clasicos": "Clásicos",
+    "novela_grafica": "Novela gráfica",
+    "infantil": "Infantil",
+    "juvenil": "Juvenil",
+    "manga": "Manga",
+    "negocios": "Negocios",
+    "tecnologia": "Tecnología",
+    "psicologia": "Psicología",
+    "politica": "Política",
+    "arte": "Arte",
+    "cocina": "Cocina",
+    "viajes": "Viajes",
+    "deporte": "Deporte",
+    "religion": "Religión",
+    "ciencia": "Ciencia"
+  },
+  "achievements": {
+    "first_book": {
+      "title": "Primer libro",
+      "description": "Agregaste tu primer libro a la biblioteca"
+    },
+    "read_5": {
+      "title": "Lector habitual",
+      "description": "Terminaste 5 libros"
+    },
+    "read_10": {
+      "title": "Devorador",
+      "description": "Terminaste 10 libros"
+    },
+    "read_50": {
+      "title": "Bibliófilo",
+      "description": "Terminaste 50 libros"
+    },
+    "first_finish": {
+      "title": "Libro terminado",
+      "description": "Marcaste tu primer libro como terminado"
+    },
+    "genres_3": {
+      "title": "Explorador",
+      "description": "Leíste libros de 3 géneros distintos"
+    },
+    "genres_5": {
+      "title": "Curioso",
+      "description": "Leíste libros de 5 géneros distintos"
+    },
+    "streak_7": {
+      "title": "Racha semanal",
+      "description": "7 días consecutivos con actividad"
+    },
+    "read_1_day": {
+      "title": "Inicio veloz",
+      "description": "Terminaste un libro en un día"
+    },
+    "night_reader": {
+      "title": "Búho lector",
+      "description": "Leíste después de medianoche"
+    },
+    "early_reader": {
+      "title": "Madrugador",
+      "description": "Leíste antes de las 6am"
+    },
+    "weekend_reader": {
+      "title": "Fin de semana activo",
+      "description": "Leíste sábado y domingo"
+    },
+    "add_10_books": {
+      "title": "Coleccionista",
+      "description": "Agregaste 10 libros a tu biblioteca"
+    },
+    "add_50_books": {
+      "title": "Biblioteca en crecimiento",
+      "description": "Agregaste 50 libros"
+    },
+    "favorites_5": {
+      "title": "Buen gusto",
+      "description": "Marcaste 5 libros como favoritos"
+    },
+    "review_1": {
+      "title": "Crítico novato",
+      "description": "Escribiste tu primera reseña"
+    },
+    "review_10": {
+      "title": "Crítico experto",
+      "description": "Escribiste 10 reseñas"
+    },
+    "rating_10": {
+      "title": "Calificador",
+      "description": "Calificaste 10 libros"
+    },
+    "long_book": {
+      "title": "Lectura intensa",
+      "description": "Terminaste un libro largo (+500 páginas)"
+    },
+    "short_books_5": {
+      "title": "Lecturas rápidas",
+      "description": "Terminaste 5 libros cortos"
+    },
+    "series_3": {
+      "title": "Fan de sagas",
+      "description": "Leíste 3 libros de una misma saga"
+    },
+    "author_5": {
+      "title": "Seguidor",
+      "description": "Leíste 5 libros del mismo autor"
+    },
+    "discover_new_author": {
+      "title": "Descubridor",
+      "description": "Leíste un autor nuevo"
+    },
+    "complete_month": {
+      "title": "Mes completo",
+      "description": "Leíste todos los días durante un mes"
+    },
+    "streak_30": {
+      "title": "Constante",
+      "description": "30 días consecutivos leyendo"
+    },
+    "read_100": {
+      "title": "Leyenda",
+      "description": "Terminaste 100 libros"
+    },
+    "wishlist_10": {
+      "title": "Soñador",
+      "description": "Agregaste 10 libros a tu lista de deseos"
+    },
+    "first_share": {
+      "title": "Social",
+      "description": "Compartiste tu primer libro"
+    },
+    "profile_complete": {
+      "title": "Perfil completo",
+      "description": "Completaste toda tu información"
+    },
+    "avatar_set": {
+      "title": "Identidad",
+      "description": "Agregaste una foto de perfil"
+    },
+    "genre_fantasy": {
+      "title": "Amante de la fantasía",
+      "description": "Leíste tu primer libro de fantasía"
+    },
+    "genre_scifi": {
+      "title": "Explorador espacial",
+      "description": "Leíste tu primer libro de ciencia ficción"
+    },
+    "genre_romance": {
+      "title": "Corazón lector",
+      "description": "Leíste tu primer libro romántico"
+    },
+    "genre_horror": {
+      "title": "Valiente",
+      "description": "Leíste un libro de terror"
+    }
   }
 }

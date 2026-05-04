@@ -30,7 +30,7 @@ export type Review = {
 
 export type Achievement = {
   unlocked_at: string;
-  achievements: { code: string; title: string; description: string } | null;
+  achievements: { code: string} | null;
 };
 
 export type PublicProfile = {

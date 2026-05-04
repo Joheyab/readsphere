@@ -33,7 +33,7 @@ export default function MobileNav() {
           )}
         </div>
 
-        <h1 className="text-lg font-bold">📚 ReadSphere</h1>
+        <h1 className="text-lg font-bold">📚 <span className="text-violet-500">Read</span>Sphere</h1>
 
         <div className="w-9" />
       </div>
