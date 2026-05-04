@@ -135,7 +135,10 @@
     "back": "Volver",
     "english": "Inglés",
     "spanish": "Español",
-    "languageNotDefined": "Idioma no definido"
+    "languageNotDefined": "Idioma no definido",
+    "viewMore": "Ver más",
+    "viewLess": "Ver menos",
+    "showAll": "{count, plural, =0 {Ver logros} one {Ver # logro} other {Ver # logros}}"
   },
   "genres": {
     "fantasia": "Fantasía",

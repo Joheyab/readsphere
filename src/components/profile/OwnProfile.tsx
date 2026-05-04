@@ -144,8 +144,8 @@ export default function OwnProfile() {
                 className="mt-4 w-full py-2 text-sm text-muted hover:text-app border border-app rounded-xl transition"
               >
                 {showAllAchievements
-                  ? "Ver menos"
-                  : `Ver todos (${achievements.length})`}
+                  ? t("common.viewLess")
+                  : t("common.showAll", { count: achievements.length })}
               </button>
             )}
           </>
