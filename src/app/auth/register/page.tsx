@@ -86,9 +86,6 @@ export default function RegisterPage() {
           <h1 className="text-2xl font-bold text-app tracking-tight">
             Crea tu cuenta
           </h1>
-          <p className="text-muted text-sm mt-1">
-            Empieza gratis, sin tarjeta de crédito
-          </p>
         </div>
 
         <div className="bg-card/60 border border-app rounded-2xl p-8">
