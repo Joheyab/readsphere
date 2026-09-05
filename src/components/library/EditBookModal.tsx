@@ -1,5 +1,6 @@
 "use client"
 
+import { fetchWithAuth } from "@/lib/supabase/fetchWithAuth"
 import { UserLibraryEntry } from "@/types/library"
 import { useMemo, useState } from "react"
 import { toast } from "sonner"
@@ -70,13 +71,17 @@ export default function EditBookModal({
       ...(format !== "sinDefinir" && { format }),
     }
 
-    await fetch(`/api/library/${entry.id}`, {
+    await fetchWithAuth(`/api/library/${entry.id}`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload),
     })
 
-    const res = await fetch("/api/achievements/check", { method: "POST" })
+    const res = await fetchWithAuth("/api/achievements/check", {
+      method: "POST",
+    })
+    if (!res.ok) return
+
     const { unlocked } = await res.json()
 
     unlocked.forEach((achievement: { title: string; description: string }) => {

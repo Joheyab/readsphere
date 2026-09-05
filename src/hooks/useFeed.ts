@@ -1,5 +1,6 @@
 "use client";
 
+import { fetchWithAuth } from "@/lib/supabase/fetchWithAuth";
 import { useEffect, useState } from "react";
 
 export type FeedItem = {
@@ -15,7 +16,7 @@ export function useFeed() {
 
   useEffect(() => {
     const fetch_ = async () => {
-      const res = await fetch("/api/feed");
+      const res = await fetchWithAuth("/api/feed");
       if (res.ok) setFeed(await res.json());
       setLoading(false);
     };

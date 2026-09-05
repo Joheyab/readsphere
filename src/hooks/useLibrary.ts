@@ -1,5 +1,6 @@
 "use client"
 
+import { fetchWithAuth } from "@/lib/supabase/fetchWithAuth"
 import { UserLibraryEntry } from "@/types/library"
 import { useCallback, useEffect, useState } from "react"
 
@@ -12,7 +13,7 @@ export function useLibrary() {
     const fetchLibrary = async () => {
       setLoading(true)
 
-      const res = await fetch("/api/library")
+      const res = await fetchWithAuth("/api/library")
       if (res.ok) {
         const data = await res.json()
         setEntries(data)

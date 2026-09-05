@@ -41,7 +41,7 @@ export default function FeedPage() {
 }
 
 function ReviewCard({ item, router }: { item: FeedItem; router: any }) {
-  const t = useTranslations("feed")
+  const t = useTranslations("profile")
   const { data, isFollowing } = item
   return (
     <div className="bg-card border border-app rounded-2xl p-5 space-y-4">
@@ -74,7 +74,7 @@ function ReviewCard({ item, router }: { item: FeedItem; router: any }) {
         </button>
         {isFollowing && (
           <span className="text-xs px-2 py-0.5 rounded-full bg-violet-600/20 text-violet-400 border border-violet-600/30">
-            {t("empty")}
+            {t("following")}
           </span>
         )}
       </div>

@@ -4,6 +4,7 @@ import { UserLibraryEntry } from "@/types/library"
 import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
 import EditBookModal from "./EditBookModal"
+import { fetchWithAuth } from "@/lib/supabase/fetchWithAuth"
 
 type Props = {
   entry: UserLibraryEntry
@@ -17,7 +18,7 @@ export default function BookCard({ entry, onDeleted, onUpdated }: Props) {
   const [menuOpen, setMenuOpen] = useState(false)
   const router = useRouter()
   async function handleDelete() {
-    await fetch(`/api/library/${entry.id}`, { method: "DELETE" })
+     await fetchWithAuth(`/api/library/${entry.id}`, { method: "DELETE" })
     onDeleted() // callback para refetch
   }
 

@@ -1,5 +1,6 @@
 "use client";
 
+import { fetchWithAuth } from "@/lib/supabase/fetchWithAuth";
 import { useEffect, useState } from "react";
 
 type RecentBook = {
@@ -24,7 +25,7 @@ export function useHomeStats() {
 
   useEffect(() => {
     const fetch_ = async () => {
-      const res = await fetch("/api/home");
+      const res = await fetchWithAuth("/api/home");
       if (res.ok) setStats(await res.json());
       setLoading(false);
     };

@@ -1,27 +1,28 @@
-"use client";
+"use client"
 
-import { useEffect, useState } from "react";
+import { fetchWithAuth } from "@/lib/supabase/fetchWithAuth"
+import { useEffect, useState } from "react"
 
 type Achievement = {
-  unlocked_at: string;
+  unlocked_at: string
   achievements: {
-    id: string;
-    code: string;
-  };
-};
+    id: string
+    code: string
+  }
+}
 
 export function useAchievements() {
-  const [achievements, setAchievements] = useState<Achievement[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [achievements, setAchievements] = useState<Achievement[]>([])
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     const fetch_ = async () => {
-      const res = await fetch("/api/achievements");
-      if (res.ok) setAchievements(await res.json());
-      setLoading(false);
-    };
-    fetch_();
-  }, []);
+      const res = await fetchWithAuth("/api/achievements")
+      if (res.ok) setAchievements(await res.json())
+      setLoading(false)
+    }
+    fetch_()
+  }, [])
 
-  return { achievements, loading };
+  return { achievements, loading }
 }

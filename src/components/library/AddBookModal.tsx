@@ -3,6 +3,7 @@
 "use client"
 
 import { supabase } from "@/lib/supabase/client"
+import { fetchWithAuth } from "@/lib/supabase/fetchWithAuth"
 import { useTranslations } from "next-intl"
 import { useEffect, useState } from "react"
 import { toast } from "sonner"
@@ -579,15 +580,20 @@ export default function AddBookModal({ onClose, onAdded }: Props) {
       { onConflict: "user_id,book_id" },
     )
 
-    const res = await fetch("/api/achievements/check", { method: "POST" })
-    const { unlocked } = await res.json()
-
-    unlocked.forEach((achievement: { code: string }) => {
-      toast.success(`🏆 ${t(`achievements.${achievement.code}.title`)}`, {
-        description: t(`achievements.${achievement.code}.description`),
-        duration: 5000,
-      })
+    const res = await fetchWithAuth("/api/achievements/check", {
+      method: "POST",
     })
+    if (res.ok) {
+      const { unlocked } = await res.json()
+
+      unlocked.forEach((achievement: { code: string }) => {
+        toast.success(`🏆 ${t(`achievements.${achievement.code}.title`)}`, {
+          description: t(`achievements.${achievement.code}.description`),
+          duration: 5000,
+        })
+      })
+    }
+
     if (libError) {
       setError(libError.message)
       setSaving(false)
